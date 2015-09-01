@@ -297,7 +297,7 @@ public final class DataRecorder {
             }
             if (this.outFileMatlab2 != null) {
                 float timeStamp = (float) positionFilter.getTimeStamp();
-                writeDataToExternalStorageFile(this.outFileMatlab2, timeStamp, new CVector[]{positionFilter.getEstimatedAngles().times((double) Constants.RAD2DEG), positionFilter.getEstimatedAcceleration(), positionFilter.getEstimatedAngularVelocity().times((double) Constants.RAD2DEG)}, new String[]{"%12.6f", "%12.6f", "%12.6f"});
+                writeDataToExternalStorageFile(this.outFileMatlab2, timeStamp, new CVector[]{positionFilter.getEstimatedAngles().times(Constants.RAD2DEG), positionFilter.getEstimatedAcceleration(), positionFilter.getEstimatedAngularVelocity().times(Constants.RAD2DEG)}, new String[]{"%12.6f", "%12.6f", "%12.6f"});
             }
             if (this.outFileGPX != null) {
                 absoluteTime = (float) positionFilter.getTimeStamp();

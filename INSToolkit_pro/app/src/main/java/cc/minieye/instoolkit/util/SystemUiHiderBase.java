@@ -1,8 +1,8 @@
 package cc.minieye.instoolkit.util;
 
 import android.app.Activity;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.view.View;
+import android.view.WindowManager;
 
 public class SystemUiHiderBase extends SystemUiHider {
     private boolean mVisible;
@@ -14,7 +14,7 @@ public class SystemUiHiderBase extends SystemUiHider {
 
     public void hide() {
         if ((this.mFlags & 2) != 0) {
-            this.mActivity.getWindow().setFlags(AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
+            this.mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         this.mOnVisibilityChangeListener.onVisibilityChange(false);
         this.mVisible = false;
@@ -32,7 +32,7 @@ public class SystemUiHiderBase extends SystemUiHider {
 
     public void show() {
         if ((this.mFlags & 2) != 0) {
-            this.mActivity.getWindow().setFlags(0, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
+            this.mActivity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         this.mOnVisibilityChangeListener.onVisibilityChange(true);
         this.mVisible = true;

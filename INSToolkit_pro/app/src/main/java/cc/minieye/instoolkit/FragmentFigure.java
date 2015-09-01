@@ -10,7 +10,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,8 +35,6 @@ import cc.minieye.kalman.core.position.PositionFilter;
 import cc.minieye.kalman.maths.CDataArray;
 import cc.minieye.kalman.maths.CVector;
 import cc.minieye.kalman.util.Constants;
-import opengl.ShaderManager;
-import opengl.Sphere;
 
 public class FragmentFigure extends Fragment implements OnTouchListener {
     private static int DATA_ARRAY_SIZE = 0;
@@ -143,7 +140,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
             this.display_meters_units = true;
             this.ColorList = new int[]{-16776961, -16711936, -65536, -16711681, -256, -65281, -7829368};
             this.dataArray = new CDataArray(str, str2, strArr, FragmentFigure.DATA_ARRAY_SIZE);
-            this.paint_axes.setColor(FragmentFigure.INVALID_POINTER_ID);
+            this.paint_axes.setColor(-1);
             this.paint_axes.setTextSize(20.0f);
             this.paint_axes.setAntiAlias(true);
             this.paint_axes.setStyle(Style.STROKE);
@@ -153,7 +150,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
             this.paint_grid.setStyle(Style.STROKE);
             this.paint_grid.setStrokeWidth(0.5f);
             this.paint_grid.setPathEffect(new DashPathEffect(new float[]{10.0f, 20.0f}, 0.0f));
-            this.paint_labels.setColor(FragmentFigure.INVALID_POINTER_ID);
+            this.paint_labels.setColor(-1);
             this.paint_labels.setTextSize(20.0f);
             this.paint_labels.setAntiAlias(true);
             this.paint_labels.setStyle(Style.STROKE);
@@ -213,7 +210,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
 
         private void PlotData(Canvas canvas, float f, float f2, CDataArray cDataArray) {
             int dimension = cDataArray.dimension();
-            int size = cDataArray.size() + FragmentFigure.INVALID_POINTER_ID;
+            int size = cDataArray.size() - 1;
             float[] fArr = new float[(size * 4)];
             for (int i = 0; i < dimension; i++) {
                 this.paint_data.setColor(this.ColorList[i - ((i / 7) * 7)]);
@@ -420,7 +417,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
         AttitudeIndicatorActivity attitudeIndicatorActivity = (AttitudeIndicatorActivity) getActivity();
         View inflate = layoutInflater.inflate(R.layout.figure_menu_layout, viewGroup, false);
         this.mFlipper = (ViewFlipper) inflate.findViewById(R.id.viewFlipper1);
-        this.max_view = INVALID_POINTER_ID;
+        this.max_view = -1;
         this.mPlotCanvasAngles = new PlotCanvas(attitudeIndicatorActivity, "Attitude Measures (deg)", "t (s)", new String[]{"roll", "pitch", "yaw"});
         this.mFlipper.addView(this.mPlotCanvasAngles);
         this.max_view++;
@@ -447,8 +444,8 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
         this.mPlotCanvasAlt = new PlotCanvas(attitudeIndicatorActivity, "Altitude (m)", "t (s)", new String[]{"alt"});
         this.mFlipper.addView(this.mPlotCanvasAlt);
         this.max_view++;
-        this.mOut1 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, 17432579);
-        this.mIn1 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, 17432578);
+        this.mOut1 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, android.R.anim.slide_out_right);
+        this.mIn1 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, android.R.anim.slide_in_left);
         this.mOut2 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, R.anim.slide_out_left);
         this.mIn2 = AnimationUtils.loadAnimation(attitudeIndicatorActivity, R.anim.slide_in_right);
         this.mFlipper.setOnTouchListener(this);
@@ -493,8 +490,8 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
         float x;
         float y;
         float x2;
-        switch (motionEvent.getAction() & MotionEventCompat.ACTION_MASK) {
-            case ShaderManager.UNIFORM_MVP_MATRIX /*0*/:
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN /*0*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_DOWN");
                     Log.d("AndroidPicRotate", "X = " + motionEvent.getX() + "\tY = " + motionEvent.getY());
@@ -506,7 +503,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
                 this.mLastTouchY = y;
                 this.mActivePointerId = motionEvent.getPointerId(0);
                 break;
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
+            case MotionEvent.ACTION_UP /*1*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_UP");
                 }
@@ -519,7 +516,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
                 }
                 this.mActivePointerId = INVALID_POINTER_ID;
                 break;
-            case Sphere.PLANET_BLEND_MODE_ATMO /*2*/:
+            case MotionEvent.ACTION_MOVE /*2*/:
                 if (this.mode == ZOOM) {
                     int findPointerIndex = motionEvent.findPointerIndex(this.mActivePointerId);
                     y = motionEvent.getX(findPointerIndex);
@@ -534,16 +531,16 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
                     break;
                 }
                 break;
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case MotionEvent.ACTION_CANCEL /*3*/:
                 this.mActivePointerId = INVALID_POINTER_ID;
                 break;
-            case ShaderManager.UNIFORM_COLOR_VECTOR /*5*/:
+            case MotionEvent.ACTION_POINTER_DOWN /*5*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_POINTER_DOWN");
                     break;
                 }
                 break;
-            case ShaderManager.UNIFORM_ALPHA /*6*/:
+            case MotionEvent.ACTION_POINTER_UP /*6*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_POINTER_UP");
                     break;

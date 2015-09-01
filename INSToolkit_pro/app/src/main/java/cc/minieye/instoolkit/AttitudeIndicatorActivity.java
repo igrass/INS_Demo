@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
 import android.hardware.Camera;
 import android.hardware.Camera.CameraInfo;
 import android.hardware.SensorManager;
@@ -30,7 +31,6 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.KeyEvent;
@@ -73,7 +73,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     static int CONTENT_PLOTS = 0;
     static int CONTENT_VOID = 0;
     private static boolean DEBUG_TRACE = false;
-    private static final int HIDER_FLAGS = 6;
+    private static final int HIDER_FLAGS = SystemUiHider.FLAG_HIDE_NAVIGATION;
     private static final boolean TOGGLE_ON_CLICK = true;
     static String[] fragmentTags;
     private AlertDialog alertGPSdialog;
@@ -194,7 +194,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         CONTENT_DATA = 3;
         CONTENT_PLOTS = 4;
         CONTENT_COMPAS = 5;
-        String[] strArr = new String[HIDER_FLAGS];
+        String[] strArr = new String[6];
         strArr[0] = "";
         strArr[1] = "fragHorizon";
         strArr[2] = "fragGround";
@@ -534,12 +534,12 @@ public final class AttitudeIndicatorActivity extends Activity {
         this.mDisplay = this.mWindowManager.getDefaultDisplay();
         this.mDisplay.getMetrics(new DisplayMetrics());
         this.mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        this.mWakeLock = this.mPowerManager.newWakeLock(HIDER_FLAGS, getClass().getName());
+        this.mWakeLock = this.mPowerManager.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, getClass().getName());
         this.mLocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         this.mWifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         registerReceiver(this.mBatInfoReceiver, new IntentFilter("android.intent.action.BATTERY_CHANGED"));
         registerReceiver(this.mWifiStateReceiver, new IntentFilter("android.net.wifi.supplicant.CONNECTION_CHANGE"));
-        setRequestedOrientation(0);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         this.mSimulation = new Simulation(this, this.mSensorManager, this.mLocManager, this.mWindowManager.getDefaultDisplay().getRotation());
         if (bundle == null) {
             this.fragmentHorizon = new FragmentHorizon();
@@ -578,11 +578,11 @@ public final class AttitudeIndicatorActivity extends Activity {
         }
         if (!isTablet(this)) {
             if (this.opts.layoutStyle == 1) {
-                setRequestedOrientation(1);
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
             getWindow().requestFeature(9);
         }
-        getWindow().setFlags(AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             actionBar.setDisplayShowTitleEnabled(false);

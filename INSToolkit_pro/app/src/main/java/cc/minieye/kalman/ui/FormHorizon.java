@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
 
 import java.util.Locale;
@@ -18,8 +17,6 @@ import cc.minieye.kalman.maths.CMatrix;
 import cc.minieye.kalman.maths.CVector;
 import cc.minieye.kalman.util.Constants;
 import cc.minieye.objects.GPSListener;
-import opengl.ShaderManager;
-import opengl.Sphere;
 
 public final class FormHorizon {
     private float AltTick2Degree;
@@ -120,10 +117,10 @@ public final class FormHorizon {
         this.paint_hud.setTextSize(20.0f);
         this.paint_hud.setAntiAlias(true);
         this.paint_hud.setStyle(Style.STROKE);
-        this.paint_horizon.setARGB(MotionEventCompat.ACTION_MASK, 0, 191, MotionEventCompat.ACTION_MASK);
+        this.paint_horizon.setARGB(255, 0, 191, 255);
         this.paint_horizon.setAntiAlias(true);
         this.paint_horizon.setStyle(Style.FILL);
-        this.paint_ground.setARGB(MotionEventCompat.ACTION_MASK, 160, 82, 45);
+        this.paint_ground.setARGB(255, 160, 82, 45);
         this.paint_ground.setAntiAlias(true);
         this.paint_ground.setStyle(Style.FILL);
         this.paint_plane.setColor(-16711936);
@@ -602,17 +599,17 @@ public final class FormHorizon {
 
     public void setProperty(int i, boolean z) {
         switch (i) {
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
+            case Constants.PROPERTY_PITCH /*1*/:
                 this.plot_pitch = z;
-            case Sphere.PLANET_BLEND_MODE_ATMO /*2*/:
+            case Constants.PROPERTY_ROLL /*2*/:
                 this.plot_roll = z;
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case Constants.PROPERTY_ALTIMETER /*3*/:
                 this.plot_altimeter = z;
-            case Sphere.PLANET_BLEND_MODE_FADE /*4*/:
+            case Constants.PROPERTY_COMPASS /*4*/:
                 this.plot_compass = z;
-            case ShaderManager.UNIFORM_COLOR_VECTOR /*5*/:
+            case Constants.PROPERTY_SPEED /*5*/:
                 this.plot_speed = z;
-            case ShaderManager.UNIFORM_ALPHA /*6*/:
+            case Constants.PROPERTY_VERTICAL_SPEED /*6*/:
                 this.plot_verticalspeed = z;
             case Constants.PROPERTY_PLOTG /*7*/:
                 this.plot_g = z;

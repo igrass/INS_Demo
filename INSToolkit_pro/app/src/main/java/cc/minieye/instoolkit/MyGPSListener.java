@@ -1,6 +1,7 @@
 package cc.minieye.instoolkit;
 
 import android.content.Context;
+import android.location.GpsStatus;
 import android.location.GpsStatus.Listener;
 import android.location.Location;
 import android.location.LocationListener;
@@ -12,7 +13,6 @@ import android.widget.Toast;
 import cc.minieye.kalman.core.MeasuresManager;
 import cc.minieye.kalman.maths.CVector;
 import cc.minieye.objects.GPSListener;
-import opengl.Sphere;
 
 public final class MyGPSListener extends GPSListener implements LocationListener {
     private boolean first_location;
@@ -64,10 +64,10 @@ public final class MyGPSListener extends GPSListener implements LocationListener
     public void onGpsStatusChangedHandler(int i) {
         boolean z = true;
         switch (i) {
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case GpsStatus.GPS_EVENT_FIRST_FIX /*3*/:
                 this.isGPSFix = true;
                 break;
-            case Sphere.PLANET_BLEND_MODE_FADE /*4*/:
+            case GpsStatus.GPS_EVENT_SATELLITE_STATUS /*4*/:
                 if (this.mLastLocation != null) {
                     if (((float) SystemClock.elapsedRealtime()) - this.mLastLocationMillis >= 2500.0f) {
                         z = false;

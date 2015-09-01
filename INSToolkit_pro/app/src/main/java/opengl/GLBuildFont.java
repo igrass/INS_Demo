@@ -8,8 +8,7 @@ import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.opengl.GLUtils;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
+import android.view.WindowManager;
 
 import javax.microedition.khronos.opengles.GL11;
 
@@ -30,8 +29,8 @@ public class GLBuildFont {
     public int texID;
 
     public GLBuildFont(GL11 gl11, String str, int i) {
-        this.fntTexWidth = AccessibilityNodeInfoCompat.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY;
-        this.fntTexHeight = AccessibilityNodeInfoCompat.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY;
+        this.fntTexWidth = WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+        this.fntTexHeight = WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         this.fntCellWidth = 32;
         this.fntCellHeight = 32;
         this.firstCharOffset = 0;
@@ -39,7 +38,7 @@ public class GLBuildFont {
         this.fontSize = i;
         this.fontName = str;
         if (gl11 != null) {
-            this.charWidth = new int[AccessibilityNodeInfoCompat.ACTION_NEXT_AT_MOVEMENT_GRANULARITY];
+            this.charWidth = new int[WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN];
             int[] iArr = new int[1];
             gl11.glGenTextures(1, iArr, 0);
             this.texID = iArr[0];
@@ -49,8 +48,8 @@ public class GLBuildFont {
     }
 
     public void createFont(GL11 gl11) {
-        this.fntTexWidth = AccessibilityNodeInfoCompat.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
-        this.fntTexHeight = AccessibilityNodeInfoCompat.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
+        this.fntTexWidth = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        this.fntTexHeight = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         this.fntCellWidth = 10;
         this.fntCellHeight = 16;
         this.fontSize = 15;
@@ -62,7 +61,7 @@ public class GLBuildFont {
         paint.setAntiAlias(true);
         paint.setStyle(Style.STROKE);
         paint.setTypeface(Typeface.MONOSPACE);
-        paint.setARGB(MotionEventCompat.ACTION_MASK, MotionEventCompat.ACTION_MASK, MotionEventCompat.ACTION_MASK, MotionEventCompat.ACTION_MASK);
+        paint.setARGB(255, 255, 255, 255);
         Rect rect = new Rect();
         paint.getTextBounds("l", 0, "l".length(), rect);
         this.charHeight = rect.height();

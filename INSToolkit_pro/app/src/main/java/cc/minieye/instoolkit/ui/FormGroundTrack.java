@@ -10,7 +10,6 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
 import android.util.FloatMath;
 import android.view.MotionEvent;
@@ -19,15 +18,12 @@ import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.ZoomControls;
 
+import java.util.Locale;
+
 import cc.minieye.instoolkit.MyGPSListener;
 import cc.minieye.kalman.maths.CDataArray;
 import cc.minieye.kalman.maths.CVector;
 import cc.minieye.kalman.util.Constants;
-
-import java.util.Locale;
-
-import opengl.ShaderManager;
-import opengl.Sphere;
 
 public class FormGroundTrack implements OnTouchListener {
     private static int DOT_ARROW;
@@ -380,7 +376,7 @@ public class FormGroundTrack implements OnTouchListener {
                 float f2 = rollingData2 < MinY ? rollingData2 : MinY;
                 float f3 = rollingData > MaxY2 ? rollingData : MaxY2;
                 float f4 = rollingData < MinY2 ? rollingData : MinY2;
-                plotDot(canvas, (this.scalex * rollingData2) + fArr[0], fArr[1] - (rollingData * this.scaley), 1.0f, DOT_TRACE, Color.argb((int) (100.0f + (155.0f * (((float) i) / ((float) size)))), 0, 0, MotionEventCompat.ACTION_MASK));
+                plotDot(canvas, (this.scalex * rollingData2) + fArr[0], fArr[1] - (rollingData * this.scaley), 1.0f, DOT_TRACE, Color.argb((int) (100.0f + (155.0f * (((float) i) / ((float) size)))), 0, 0, 255));
                 i++;
                 MaxY2 = f3;
                 MinY2 = f4;
@@ -573,19 +569,19 @@ public class FormGroundTrack implements OnTouchListener {
         Point point = new Point();
         point.x = (int) motionEvent.getX();
         point.y = (int) motionEvent.getY();
-        switch (motionEvent.getAction() & MotionEventCompat.ACTION_MASK) {
-            case ShaderManager.UNIFORM_MVP_MATRIX /*0*/:
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN /*0*/:
                 mousePressed(3, point, motionEvent);
                 break;
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
-            case ShaderManager.UNIFORM_ALPHA /*6*/:
+            case MotionEvent.ACTION_UP /*1*/:
+            case MotionEvent.ACTION_CANCEL /*3*/:
+            case MotionEvent.ACTION_POINTER_UP /*6*/:
                 mouseReleased(point);
                 break;
-            case Sphere.PLANET_BLEND_MODE_ATMO /*2*/:
+            case MotionEvent.ACTION_MOVE /*2*/:
                 mouseDragged(point, motionEvent);
                 break;
-            case ShaderManager.UNIFORM_COLOR_VECTOR /*5*/:
+            case MotionEvent.ACTION_POINTER_DOWN /*5*/:
                 mousePressed(2, point, motionEvent);
                 break;
         }
@@ -610,9 +606,9 @@ public class FormGroundTrack implements OnTouchListener {
 
     public void setProperty(int i, boolean z) {
         switch (i) {
-            case Sphere.PLANET_BLEND_MODE_FADE /*4*/:
+            case Constants.PROPERTY_COMPASS /*4*/:
                 this.plot_compass = z;
-            case ShaderManager.UNIFORM_COLOR_VECTOR /*5*/:
+            case Constants.PROPERTY_SPEED /*5*/:
                 this.plot_speed = z;
             case Constants.PROPERTY_PLOTG /*7*/:
                 this.plot_g = z;

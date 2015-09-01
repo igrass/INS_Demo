@@ -15,9 +15,6 @@ import android.view.inputmethod.InputMethodManager;
 
 import java.util.ArrayList;
 
-import opengl.ShaderManager;
-import opengl.Sphere;
-
 public class DragController {
     public static int DRAG_ACTION_COPY = 0;
     public static int DRAG_ACTION_MOVE = 0;
@@ -169,13 +166,13 @@ public class DragController {
         int clamp = clamp((int) motionEvent.getRawX(), 0, this.mDisplayMetrics.widthPixels);
         int clamp2 = clamp((int) motionEvent.getRawY(), 0, this.mDisplayMetrics.heightPixels);
         switch (action) {
-            case ShaderManager.UNIFORM_MVP_MATRIX /*0*/:
+            case MotionEvent.ACTION_DOWN /*0*/:
                 this.mMotionDownX = (float) clamp;
                 this.mMotionDownY = (float) clamp2;
                 this.mLastDropTarget = null;
                 break;
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case MotionEvent.ACTION_UP /*1*/:
+            case MotionEvent.ACTION_CANCEL /*3*/:
                 if (this.mDragging) {
                     drop((float) clamp, (float) clamp2);
                 }
@@ -193,17 +190,17 @@ public class DragController {
         int clamp = clamp((int) motionEvent.getRawX(), 0, this.mDisplayMetrics.widthPixels);
         int clamp2 = clamp((int) motionEvent.getRawY(), 0, this.mDisplayMetrics.heightPixels);
         switch (action) {
-            case ShaderManager.UNIFORM_MVP_MATRIX /*0*/:
+            case MotionEvent.ACTION_DOWN /*0*/:
                 this.mMotionDownX = (float) clamp;
                 this.mMotionDownY = (float) clamp2;
                 break;
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
+            case MotionEvent.ACTION_UP /*1*/:
                 if (this.mDragging) {
                     drop((float) clamp, (float) clamp2);
                 }
                 endDrag();
                 break;
-            case Sphere.PLANET_BLEND_MODE_ATMO /*2*/:
+            case MotionEvent.ACTION_MOVE /*2*/:
                 this.mDragView.move((int) motionEvent.getRawX(), (int) motionEvent.getRawY());
                 int[] iArr = this.mCoordinatesTemp;
                 DropTarget findDropTarget = findDropTarget(clamp, clamp2, iArr);
@@ -221,7 +218,7 @@ public class DragController {
                 }
                 this.mLastDropTarget = findDropTarget;
                 break;
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case MotionEvent.ACTION_CANCEL /*3*/:
                 cancelDrag();
                 break;
         }

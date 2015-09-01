@@ -3,9 +3,9 @@ package cc.minieye.instoolkit.util;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build.VERSION;
-import android.support.v4.view.accessibility.AccessibilityNodeInfoCompat;
 import android.view.View;
 import android.view.View.OnSystemUiVisibilityChangeListener;
+import android.view.WindowManager;
 
 @TargetApi(11)
 public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
@@ -25,7 +25,7 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
                         if (SystemUiHiderHoneycomb.this.mActivity.getActionBar() != null) {
                             SystemUiHiderHoneycomb.this.mActivity.getActionBar().hide();
                         }
-                        SystemUiHiderHoneycomb.this.mActivity.getWindow().setFlags(AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
+                        SystemUiHiderHoneycomb.this.mActivity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                     }
                     SystemUiHiderHoneycomb.this.mOnVisibilityChangeListener.onVisibilityChange(false);
                     SystemUiHiderHoneycomb.this.mVisible = false;
@@ -36,21 +36,21 @@ public class SystemUiHiderHoneycomb extends SystemUiHiderBase {
                     if (SystemUiHiderHoneycomb.this.mActivity.getActionBar() != null) {
                         SystemUiHiderHoneycomb.this.mActivity.getActionBar().show();
                     }
-                    SystemUiHiderHoneycomb.this.mActivity.getWindow().setFlags(0, AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT);
+                    SystemUiHiderHoneycomb.this.mActivity.getWindow().setFlags(0, WindowManager.LayoutParams.FLAG_FULLSCREEN);
                 }
                 SystemUiHiderHoneycomb.this.mOnVisibilityChangeListener.onVisibilityChange(true);
                 SystemUiHiderHoneycomb.this.mVisible = true;
             }
         };
-        this.mShowFlags = AccessibilityNodeInfoCompat.ACTION_NEXT_AT_MOVEMENT_GRANULARITY;
+        this.mShowFlags = WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         this.mHideFlags = 1;
         this.mTestFlags = 1;
         if ((this.mFlags & 2) != 0) {
-            this.mShowFlags |= AccessibilityNodeInfoCompat.ACTION_NEXT_HTML_ELEMENT;
+            this.mShowFlags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
             this.mHideFlags |= 1028;
         }
         if ((this.mFlags & 6) != 0) {
-            this.mShowFlags |= AccessibilityNodeInfoCompat.ACTION_PREVIOUS_AT_MOVEMENT_GRANULARITY;
+            this.mShowFlags |= WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
             this.mHideFlags |= 514;
             this.mTestFlags = 2;
         }

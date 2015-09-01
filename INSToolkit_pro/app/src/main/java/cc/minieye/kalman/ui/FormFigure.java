@@ -12,7 +12,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.view.MotionEventCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
@@ -31,8 +30,6 @@ import java.util.Locale;
 
 import cc.minieye.instoolkit.R;
 import cc.minieye.kalman.maths.CDataArray;
-import opengl.ShaderManager;
-import opengl.Sphere;
 
 public class FormFigure extends Activity implements OnTouchListener {
     private static boolean DEBUG = false;
@@ -113,7 +110,7 @@ public class FormFigure extends Activity implements OnTouchListener {
             this.display_debug_info = false;
             this.display_meters_units = true;
             this.ColorList = new int[]{-16776961, -16711936, -65536, -16711681, -256, -65281, -7829368};
-            this.paint_axes.setColor(FormFigure.INVALID_POINTER_ID);
+            this.paint_axes.setColor(-1);
             this.paint_axes.setTextSize(20.0f);
             this.paint_axes.setAntiAlias(true);
             this.paint_axes.setStyle(Style.STROKE);
@@ -123,7 +120,7 @@ public class FormFigure extends Activity implements OnTouchListener {
             this.paint_grid.setStyle(Style.STROKE);
             this.paint_grid.setStrokeWidth(0.5f);
             this.paint_grid.setPathEffect(new DashPathEffect(new float[]{10.0f, 20.0f}, 0.0f));
-            this.paint_labels.setColor(FormFigure.INVALID_POINTER_ID);
+            this.paint_labels.setColor(-1);
             this.paint_labels.setTextSize(20.0f);
             this.paint_labels.setAntiAlias(true);
             this.paint_labels.setStyle(Style.STROKE);
@@ -476,8 +473,8 @@ public class FormFigure extends Activity implements OnTouchListener {
         float x;
         float y;
         float x2;
-        switch (motionEvent.getAction() & MotionEventCompat.ACTION_MASK) {
-            case ShaderManager.UNIFORM_MVP_MATRIX /*0*/:
+        switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN /*0*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_DOWN");
                     Log.d("AndroidPicRotate", "X = " + motionEvent.getX() + "\tY = " + motionEvent.getY());
@@ -489,7 +486,7 @@ public class FormFigure extends Activity implements OnTouchListener {
                 this.mLastTouchY = y;
                 this.mActivePointerId = motionEvent.getPointerId(0);
                 break;
-            case Sphere.PLANET_BLEND_MODE_NONE /*1*/:
+            case MotionEvent.ACTION_UP /*1*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_UP");
                 }
@@ -502,7 +499,7 @@ public class FormFigure extends Activity implements OnTouchListener {
                 }
                 this.mActivePointerId = INVALID_POINTER_ID;
                 break;
-            case Sphere.PLANET_BLEND_MODE_ATMO /*2*/:
+            case MotionEvent.ACTION_MOVE /*2*/:
                 if (this.mode == ZOOM) {
                     int findPointerIndex = motionEvent.findPointerIndex(this.mActivePointerId);
                     y = motionEvent.getX(findPointerIndex);
@@ -517,16 +514,16 @@ public class FormFigure extends Activity implements OnTouchListener {
                     break;
                 }
                 break;
-            case Sphere.PLANET_BLEND_MODE_SOLID /*3*/:
+            case MotionEvent.ACTION_CANCEL /*3*/:
                 this.mActivePointerId = INVALID_POINTER_ID;
                 break;
-            case ShaderManager.UNIFORM_COLOR_VECTOR /*5*/:
+            case MotionEvent.ACTION_POINTER_DOWN /*5*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_POINTER_DOWN");
                     break;
                 }
                 break;
-            case ShaderManager.UNIFORM_ALPHA /*6*/:
+            case MotionEvent.ACTION_POINTER_UP /*6*/:
                 if (DEBUG) {
                     Log.d("AndroidPicRotate", "ACTION_POINTER_UP");
                     break;
