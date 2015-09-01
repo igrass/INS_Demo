@@ -249,6 +249,7 @@ public class Simulation implements SensorEventListener {
         int[] iArr = new int[3];
         iArr[0] = 3;
         iArr[1] = 2;
+        iArr[2] = 0;
         if (i <= 2) {
             this.vSensorDelayRate = iArr[i];
         }

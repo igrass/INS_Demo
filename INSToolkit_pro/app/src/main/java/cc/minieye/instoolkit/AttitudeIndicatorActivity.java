@@ -303,11 +303,11 @@ public final class AttitudeIndicatorActivity extends Activity {
             this.opts.layoutStyle = (int) Double.parseDouble(defaultSharedPreferences.getString("selectlayout", "2"));
         }
         this.opts.InstrList = defaultSharedPreferences.getString("disp_multi_select", "1,2,3,4,5,6,7,11").split(",");
-        this.opts.KalmanFilterType = ((int) Double.parseDouble(defaultSharedPreferences.getString("filterchoice", "1"))) + 1;
+        this.opts.KalmanFilterType = (int) Double.parseDouble(defaultSharedPreferences.getString("filterchoice", "1"));
         if (this.mSimulation.getKalmanId() != this.opts.KalmanFilterType) {
             this.mSimulation.setKalmanId(this.opts.KalmanFilterType);
         }
-        this.opts.valKalmanFrequency = Double.parseDouble(defaultSharedPreferences.getString("editfrequency", "100"));
+        this.opts.valKalmanFrequency = Double.parseDouble(defaultSharedPreferences.getString("editfrequency", "50"));
         this.mSimulation.getKalman().setFrequency(this.opts.valKalmanFrequency);
         this.opts.valKalmanPower = (int) Double.parseDouble(defaultSharedPreferences.getString("editpower", "1"));
         this.mSimulation.setPower(this.opts.valKalmanPower);
@@ -315,19 +315,19 @@ public final class AttitudeIndicatorActivity extends Activity {
         this.mSimulation.getKalman().enablePositionFilter(this.opts.enKapmanPosition);
         this.opts.covSetting = Integer.parseInt(defaultSharedPreferences.getString("paramcov", "1"));
         if (this.opts.covSetting == 999) {
-            this.opts.valMeasureAngleCovariance = Double.parseDouble(defaultSharedPreferences.getString("editanglecov", "0.025"));
-            this.opts.valCompassCovariance = Double.parseDouble(defaultSharedPreferences.getString("editcompasscov", "0.1"));
-            this.opts.valOmegaCovariance = Double.parseDouble(defaultSharedPreferences.getString("editomegacov", "0.07"));
-            this.opts.valPositionCovariance = Double.parseDouble(defaultSharedPreferences.getString("editpositioncov", "0.025"));
-            this.opts.valVelocityCovariance = Double.parseDouble(defaultSharedPreferences.getString("editvelocitycov", "0.025"));
-            this.opts.valAccelerationCovariance = Double.parseDouble(defaultSharedPreferences.getString("editaccelcov", "0.001"));
+            this.opts.valMeasureAngleCovariance = Double.parseDouble(defaultSharedPreferences.getString("editanglecov", "50"));
+            this.opts.valCompassCovariance = Double.parseDouble(defaultSharedPreferences.getString("editcompasscov", "100"));
+            this.opts.valOmegaCovariance = Double.parseDouble(defaultSharedPreferences.getString("editomegacov", "0.01"));
+            this.opts.valPositionCovariance = Double.parseDouble(defaultSharedPreferences.getString("editpositioncov", "0.001"));
+            this.opts.valVelocityCovariance = Double.parseDouble(defaultSharedPreferences.getString("editvelocitycov", "0.001"));
+            this.opts.valAccelerationCovariance = Double.parseDouble(defaultSharedPreferences.getString("editaccelcov", "0.01"));
             this.mSimulation.getKalman().setMeasurementCovariances(this.opts.valMeasureAngleCovariance, this.opts.valCompassCovariance, this.opts.valOmegaCovariance, this.opts.valPositionCovariance, this.opts.valVelocityCovariance, this.opts.valAccelerationCovariance);
             this.opts.abx = defaultSharedPreferences.getFloat("accbiasX", 0.0f);
             this.opts.aby = defaultSharedPreferences.getFloat("accbiasY", 0.0f);
             this.opts.abz = defaultSharedPreferences.getFloat("accbiasZ", 0.0f);
             this.mSimulation.getKalman().setAccBias((double) this.opts.abx, (double) this.opts.aby, (double) this.opts.abz);
         } else {
-            if (((this.opts.covSetting <= 0 ? 1 : 0) | (this.opts.covSetting > 4 ? 1 : 0)) != 0) {
+            if (this.opts.covSetting < 1 || this.opts.covSetting > 4) {
                 this.opts.covSetting = 1;
             }
             int i = this.opts.covSetting - 1;

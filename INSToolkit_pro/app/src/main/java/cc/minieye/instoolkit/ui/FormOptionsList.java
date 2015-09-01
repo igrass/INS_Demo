@@ -79,7 +79,7 @@ public final class FormOptionsList extends PreferenceActivity implements OnShare
         this.editvelocitycov = (EditTextPreference) getPreferenceScreen().findPreference("editvelocitycov");
         this.editaccelcov = (EditTextPreference) getPreferenceScreen().findPreference("editaccelcov");
         this.selectFilter = (ListPreference) getPreferenceScreen().findPreference("filterchoice");
-        this.selectFilter.setEnabled(false);
+//        this.selectFilter.setEnabled(false);
         findPreference("sensorlist").setOnPreferenceClickListener(new OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 FormOptionsList.this.displaySensorList();
