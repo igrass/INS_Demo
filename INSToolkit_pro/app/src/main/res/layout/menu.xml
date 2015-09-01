@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridView
+    android:id="@id/Menu"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="top"
+    android:columnWidth="65.0dip"
+    android:gravity="top|center"
+    android:horizontalSpacing="12.0dip"
+    android:numColumns="auto_fit"
+    android:scrollbars="none"
+    android:stretchMode="columnWidth"
+    android:verticalSpacing="20.0dip"/>

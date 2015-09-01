@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:key="first_preferencescreen">
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Display">
+
+        <ListPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="0"
+            android:entries="@array/opts_units_list"
+            android:entryValues="@array/opts_units_list_values"
+            android:key="meterschecked"
+            android:summary="@string/opts_disp_metrics_desc"
+            android:title="@string/opts_disp_metrics"/>
+
+        <cc.minieye.instoolkit.ui.CustomListPreference
+            android:name="EditText Preference"
+            android:defaultValue="0"
+            android:entries="@array/opts_layout_list"
+            android:entryValues="@array/opts_layout_list_values"
+            android:key="selectlayout"
+            android:summary="@string/opts_layout_desc"
+            android:title="@string/opts_layout"/>
+
+        <cc.minieye.instoolkit.ui.MultiSelectListPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1,2,3,4,5,6,7,11"
+            android:entries="@array/opts_instrument_list"
+            android:entryValues="@array/opts_instrument_list_values"
+            android:key="disp_multi_select"
+            android:summary="@string/opts_instrument_desc"
+            android:title="@string/opts_instrument"/>
+
+        <Preference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="resetpitch"
+            android:summary="@string/opts_resetpitch_desc"
+            android:title="@string/opts_resetpitch"/>
+
+        <CheckBoxPreference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="false"
+            android:key="googlemapchecked"
+            android:summary="@string/opts_googlemap_desc"
+            android:title="@string/opts_googlemap"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Data Output">
+
+        <ListPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="0"
+            android:entries="@array/opts_fileformat_list"
+            android:entryValues="@array/opts_fileformat_values"
+            android:key="fileformat_select"
+            android:summary="@string/opts_fileformat_desc"
+            android:title="@string/opts_fileformat"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enUDP"
+            android:summary="@string/opts_udp_desc"
+            android:title="@string/opts_udp"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="12345"
+            android:inputType="phone"
+            android:key="editudpport"
+            android:summary="@string/opts_udpport_desc"
+            android:title="@string/opts_udpport"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="192.168.1.2"
+            android:inputType="phone"
+            android:key="editudpaddress"
+            android:summary="@string/opts_udpaddress_desc"
+            android:title="@string/opts_udpaddress"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Kalman Filter Settings">
+
+        <ListPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="50"
+            android:entries="@array/opts_kalmanfq_list"
+            android:entryValues="@array/opts_kalmanfq_list_values"
+            android:key="editfrequency"
+            android:summary="@string/opts_freq_desc"
+            android:title="@string/opts_freq"/>
+
+        <ListPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1"
+            android:entries="@array/opts_kalmanpower_list"
+            android:entryValues="@array/opts_kalmanpower_list_values"
+            android:key="editpower"
+            android:summary="@string/opts_power_desc"
+            android:title="@string/opts_power"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enKFposition"
+            android:summary="@string/opts_position_desc"
+            android:title="@string/opts_position"/>
+
+        <Preference
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:key="sensorlist"
+            android:summary="@string/opts_sensors_desc"
+            android:title="@string/lookup_sensors"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Advanced Kalman Filter Settings">
+
+        <ListPreference
+            android:name="SelectFilterPreference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="0"
+            android:entries="@array/opts_filter_list"
+            android:entryValues="@array/opts_filter_list_values"
+            android:key="filterchoice"
+            android:summary="@string/opts_filter_desc"
+            android:title="@string/opts_filter"/>
+
+        <ListPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="0"
+            android:entries="@array/opts_paramcov_list"
+            android:entryValues="@array/opts_paramcov_list_values"
+            android:key="paramcov"
+            android:summary="@string/opts_paramcov_desc"
+            android:title="@string/opts_paramcov"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="100"
+            android:inputType="phone"
+            android:key="editanglecov"
+            android:summary="@string/opts_cov_angle_desc"
+            android:title="@string/opts_cov_angle"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="50"
+            android:inputType="phone"
+            android:key="editcompasscov"
+            android:summary="@string/opts_compas_cov_desc"
+            android:title="@string/opts_compas_cov"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1000"
+            android:inputType="phone"
+            android:key="editomegacov"
+            android:summary="@string/opts_cov_omg_desc"
+            android:title="@string/opts_cov_omg"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1.0E-4"
+            android:inputType="phone"
+            android:key="editpositioncov"
+            android:summary="@string/opts_cov_pos_desc"
+            android:title="@string/opts_cov_pos"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="1.0E-4"
+            android:inputType="phone"
+            android:key="editvelocitycov"
+            android:summary="@string/opts_cov_vel_desc"
+            android:title="@string/opts_cov_vel"/>
+
+        <EditTextPreference
+            android:name="EditText Preference"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:defaultValue="0.01"
+            android:inputType="phone"
+            android:key="editaccelcov"
+            android:summary="@string/opts_acc_cov_desc"
+            android:title="@string/opts_acc_cov"/>
+    </PreferenceCategory>
+</PreferenceScreen>

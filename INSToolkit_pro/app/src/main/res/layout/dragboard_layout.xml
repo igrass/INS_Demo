@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cc.minieye.instoolkit.drag3.DragLayer
+    android:id="@id/drag_layer"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:launcher="http://schemas.android.com/apk/res/com.android.launcher"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingTop="50.0dip">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <GridView
+                android:id="@id/image_grid_view"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/grid_background"
+                android:columnWidth="100.0dip"
+                android:gravity="center"
+                android:horizontalSpacing="3.0dip"
+                android:stretchMode="spacingWidth"
+                android:verticalSpacing="3.0dip"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#aa000000"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <cc.minieye.instoolkit.drag3.DeleteZone
+                android:id="@id/delete_zone_view"
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:layout_gravity="center"
+                android:src="@drawable/delete_zone"/>
+
+            <ImageView
+                android:id="@id/add_view"
+                android:layout_width="60.0dip"
+                android:layout_height="60.0dip"
+                android:layout_gravity="right"
+                android:contentDescription="add content"
+                android:src="@android:drawable/ic_menu_add"/>
+        </LinearLayout>
+    </RelativeLayout>
+</cc.minieye.instoolkit.drag3.DragLayer>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@id/menu_graph_previous" android:title="@string/data_menu_previous" />
+    <item android:id="@id/menu_graph_next" android:title="@string/data_menu_next" />
+</menu>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="opts_paramcov_list">
+        <item>Setting 1</item>
+        <item>Setting 2</item>
+        <item>Custom</item>
+        <item>Test 1 (ignore acc)</item>
+        <item>Test 2 (ignore gyro)</item>
+    </string-array>
+    <string-array name="opts_paramcov_list_values">
+        <item>1</item>
+        <item>2</item>
+        <item>999</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
+    <string-array name="opts_bodyaxes_list">
+        <item>X,Y,Z (default)</item>
+        <item>Y,Z,X</item>
+        <item>Z,X,Y</item>
+        <item>-X,-Y,Z</item>
+        <item>Y,-Z,X</item>
+        <item>Z,X,-Y</item>
+    </string-array>
+    <string-array name="opts_units_list">
+        <item>m, m/s (default)</item>
+        <item>ft, ft/s</item>
+        <item>km, km/h</item>
+        <item>mi, mph</item>
+    </string-array>
+    <string-array name="opts_units_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="opts_kalmanfq_list">
+        <item>50 Hz</item>
+        <item>100 Hz</item>
+        <item>150 Hz</item>
+    </string-array>
+    <string-array name="opts_kalmanfq_list_values">
+        <item>50</item>
+        <item>100</item>
+        <item>150</item>
+    </string-array>
+    <string-array name="opts_kalmanpower_list">
+        <item>low</item>
+        <item>normal (default)</item>
+        <item>high</item>
+    </string-array>
+    <string-array name="opts_kalmanpower_list_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="opts_samplingfq_list">
+        <item>0.1 second</item>
+        <item>1 seconds</item>
+        <item>2 seconds</item>
+        <item>5 seconds</item>
+        <item>10 seconds</item>
+        <item>disabled</item>
+    </string-array>
+    <string-array name="opts_samplingfq_list_values">
+        <item>0.1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>5</item>
+        <item>10</item>
+        <item>0</item>
+    </string-array>
+    <string-array name="opts_instrument_list">
+        <item>Pitch indicator</item>
+        <item>Roll/Bank indicator</item>
+        <item>Altimeter</item>
+        <item>Compass</item>
+        <item>Anemometer</item>
+        <item>Vertical Speed</item>
+        <item>G indicator</item>
+        <item>Timer</item>
+    </string-array>
+    <string-array name="opts_instrument_list_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>11</item>
+    </string-array>
+    <string-array name="opts_layout_list">
+        <item>1 pane</item>
+        <item>2 panes</item>
+        <item>3 panes</item>
+    </string-array>
+    <string-array name="opts_layout_list_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="opts_fileformat_list">
+        <item>GPX</item>
+        <item>MATLAB</item>
+    </string-array>
+    <string-array name="opts_fileformat_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="opts_filter_list">
+        <item>EKF</item>
+        <item>UKF</item>
+    </string-array>
+    <string-array name="opts_filter_list_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>

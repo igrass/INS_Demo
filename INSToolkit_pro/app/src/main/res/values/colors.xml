@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="grid_background">#ff000000</color>
+    <color name="cell_empty">#ff363636</color>
+    <color name="cell_filled">#ff464646</color>
+    <color name="cell_empty_hover">#ff104e8b</color>
+    <color name="cell_filled_hover">#ffee2c2c</color>
+    <color name="cell_dragging">#880011dd</color>
+    <color name="headline_font">#ff00a010</color>
+    <color name="tree_normal_font">#ffffffff</color>
+    <color name="tree_background">#ff00ffff</color>
+    <color name="tree_mini_text">#ff0010ff</color>
+    <color name="border_color">#f000f0ff</color>
+    <color name="blue_tint">#880000ff</color>
+    <color name="transparent_white">#ff000000</color>
+    <color name="black">#ff000000</color>
+    <color name="red">#ffff0000</color>
+    <color name="green">#ff00ff00</color>
+    <color name="blue">#ff0000ff</color>
+</resources>

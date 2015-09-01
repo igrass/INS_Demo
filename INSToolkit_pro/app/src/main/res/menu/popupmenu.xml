@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@id/group_popupmenu">
+        <item android:id="@id/menu_add_view_left" android:title="Add View Left" />
+        <item android:id="@id/menu_add_view_right" android:title="Add View Right" />
+        <item android:id="@id/menu_add_view_down" android:title="Add View Down" />
+        <item android:id="@id/menu_change_view" android:title="Change View" />
+        <item android:id="@id/menu_close_view" android:title="Close View" />
+    </group>
+</menu>
