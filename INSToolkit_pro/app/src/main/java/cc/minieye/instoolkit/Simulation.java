@@ -95,7 +95,7 @@ public class Simulation implements SensorEventListener {
         this.DataTransferPeriod = 200;
         this.allowDataTransferTask = true;
         this.mLastTimeStamp = 0;
-        this.vSensorDelayRate = 2;
+        this.vSensorDelayRate = SensorManager.SENSOR_DELAY_UI;
         this.firstRun = true;
         this.calibrationData = new float[3];
         this.calibrationDataSize = 0;
@@ -247,9 +247,9 @@ public class Simulation implements SensorEventListener {
 
     public void setPower(int i) {
         int[] iArr = new int[3];
-        iArr[0] = 3;
-        iArr[1] = 2;
-        iArr[2] = 0;
+        iArr[0] = SensorManager.SENSOR_DELAY_NORMAL;
+        iArr[1] = SensorManager.SENSOR_DELAY_UI;
+        iArr[2] = SensorManager.SENSOR_DELAY_FASTEST;
         if (i <= 2) {
             this.vSensorDelayRate = iArr[i];
         }
