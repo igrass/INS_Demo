@@ -195,7 +195,8 @@ public final class phyAttitude implements physics {
 
     public double getYawAngle() {
         double euler3 = this.quaternion.getEuler3();
-        return euler3 < 0.0d ? euler3 + 6.283185307179586d : euler3;
+        return euler3;
+//        return euler3 < 0.0d ? euler3 + 6.283185307179586d : euler3;
     }
 
     public final void quaternion2VectorParameters(CQuaternion cQuaternion, CVector cVector) {

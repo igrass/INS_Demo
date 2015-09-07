@@ -424,6 +424,7 @@ public final class UKFPosition extends PositionFilter {
         this.last_time = System.currentTimeMillis();
         this.initialTime = this.last_time;
         this.kattitude.start();
+        this.initialisation_stage = 1;
         this.status = STARTED;
         this.mHandler.postDelayed(this.mUpdateTimeTask, this.period);
     }

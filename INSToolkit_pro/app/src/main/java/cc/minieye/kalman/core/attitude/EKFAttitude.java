@@ -1,6 +1,7 @@
 package cc.minieye.kalman.core.attitude;
 
 import android.os.Handler;
+
 import cc.minieye.kalman.core.CovarianceSettings;
 import cc.minieye.kalman.core.MeasuresManager;
 import cc.minieye.kalman.maths.CMatrix;

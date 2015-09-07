@@ -280,29 +280,27 @@ public final class DataRecorder {
     public void pushData(PositionFilter positionFilter) {
         if (this.recording) {
             CVector cVector;
-            float absoluteTime;
+            float timeStamp;
+            timeStamp = (float) positionFilter.getTimeStamp();
             if (this.outFileMatlab1 != null) {
                 cVector = new CVector(3);
                 positionFilter.getAttitude().getMeasuredOrientation(cVector);
                 CVector measureLatLonAlt = positionFilter.getMeasureLatLonAlt();
                 OutputBufferInfo outputBufferInfo = this.outFileMatlab1;
-                absoluteTime = (float) positionFilter.getAbsoluteTime();
                 CVector[] cVectorArr = new CVector[5];
-                cVectorArr[0] = cVector.times((double) Constants.RAD2DEG);
+                cVectorArr[0] = cVector.times(Constants.RAD2DEG);
                 cVectorArr[1] = positionFilter.getMeasureTotalAcc();
-                cVectorArr[2] = positionFilter.getAttitude().getMeasureGyro().times((double) Constants.RAD2DEG);
+                cVectorArr[2] = positionFilter.getAttitude().getMeasureGyro().times(Constants.RAD2DEG);
                 cVectorArr[3] = positionFilter.getAttitude().getMeasureMag();
                 cVectorArr[4] = new CVector(new float[]{(float) (measureLatLonAlt.getElement(1) * Constants.RAD2DEG), (float) (measureLatLonAlt.getElement(2) * Constants.RAD2DEG), (float) measureLatLonAlt.getElement(3), positionFilter.getGPSAccuracy()});
-                writeDataToExternalStorageFile(outputBufferInfo, absoluteTime, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f", "%18.13g"});
+                writeDataToExternalStorageFile(outputBufferInfo, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f", "%18.13g"});
             }
             if (this.outFileMatlab2 != null) {
-                float timeStamp = (float) positionFilter.getTimeStamp();
                 writeDataToExternalStorageFile(this.outFileMatlab2, timeStamp, new CVector[]{positionFilter.getEstimatedAngles().times(Constants.RAD2DEG), positionFilter.getEstimatedAcceleration(), positionFilter.getEstimatedAngularVelocity().times(Constants.RAD2DEG)}, new String[]{"%12.6f", "%12.6f", "%12.6f"});
             }
             if (this.outFileGPX != null) {
-                absoluteTime = (float) positionFilter.getTimeStamp();
                 cVector = positionFilter.getEstimatedLatLonAlt();
-                writeDataToGPXFile(this.outFileGPX, absoluteTime, cVector.getElement(1), cVector.getElement(2), cVector.getElement(3), (float) positionFilter.getBearing());
+                writeDataToGPXFile(this.outFileGPX, timeStamp, cVector.getElement(1), cVector.getElement(2), cVector.getElement(3), (float) positionFilter.getBearing());
             }
         }
     }
