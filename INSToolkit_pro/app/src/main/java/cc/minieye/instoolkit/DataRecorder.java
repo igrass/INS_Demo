@@ -29,6 +29,7 @@ public final class DataRecorder {
     private OutputBufferInfo outFileGPX;
     private OutputBufferInfo outFileMatlab1;
     private OutputBufferInfo outFileMatlab2;
+    private OutputBufferInfo outFileMatlab3;
     private boolean recording;
 
     class OutputBufferInfo {
@@ -47,6 +48,7 @@ public final class DataRecorder {
         this.mExternalStorageWriteable = false;
         this.outFileMatlab1 = null;
         this.outFileMatlab2 = null;
+        this.outFileMatlab3 = null;
         this.outFileGPX = null;
         this.recording = false;
         this.mContext = context;
@@ -134,7 +136,7 @@ public final class DataRecorder {
                             outputBufferInfo.outputFile.write("#        LON Longitude GPS measurement, deg\n");
                             outputBufferInfo.outputFile.write("#        ALT Altitude GPS measurement, m\n");
                             outputBufferInfo.outputFile.write("#        GPA GPS accuracy, m\n#\n");
-                        } else {
+                        } else if (i == 2) {
                             outputBufferInfo.outputFile.write("# ESTIMATED DATA: outputs from the Kalman filter.\n");
                             outputBufferInfo.outputFile.write("# T     PSI    THETA      PHI      ACC_X    ACC_Y    ACC_Z    GYR_X     GYR_Y    GYR_Z\n");
                             outputBufferInfo.outputFile.write("# Units: deg, m/s2, rad/s, uT\n");
@@ -143,6 +145,15 @@ public final class DataRecorder {
                             outputBufferInfo.outputFile.write("#        ACC Accelerations, m/s2\n");
                             outputBufferInfo.outputFile.write("#        GYR Angular velocities, rad/s\n");
                             outputBufferInfo.outputFile.write("#        MAG Magnetic field measurements, uT\n#\n");
+                        } else if (i == 3) {
+                            outputBufferInfo.outputFile.write("# MINE DATA: outputs from sensors.\n");
+                            outputBufferInfo.outputFile.write("# T     PSI    THETA      PHI      LIN_ACC_X    LIN_ACC_Y    LIN_ACC_Z    ACC_X    ACC_Y    ACC_Z    GYR_X     GYR_Y    GYR_Z    \n");
+                            outputBufferInfo.outputFile.write("# Units: deg, m/s2, rad/s, uT\n");
+                            outputBufferInfo.outputFile.write("# Values\n");
+                            outputBufferInfo.outputFile.write("#        T   Time with respect to start of the app\n");
+                            outputBufferInfo.outputFile.write("#        LIN_ACC Liner Accelerations, m/s2\n");
+                            outputBufferInfo.outputFile.write("#        ACC Accelerations, m/s2\n");
+                            outputBufferInfo.outputFile.write("#        GYR Angular velocities, rad/s\n");
                         }
                     } catch (Throwable e) {
                         Toast.makeText(this.mContext, "Cannot write file " + file, Toast.LENGTH_SHORT).show();
@@ -212,6 +223,8 @@ public final class DataRecorder {
                 this.outFileMatlab1 = null;
                 closeExternalStorageFile(this.outFileMatlab2);
                 this.outFileMatlab2 = null;
+                closeExternalStorageFile(this.outFileMatlab3);
+                this.outFileMatlab3 = null;
             }
             this.recording = false;
             return;
@@ -227,6 +240,8 @@ public final class DataRecorder {
             openExternalStorageFile(this.filename + format + "_raw.txt", 1, this.outFileMatlab1);
             this.outFileMatlab2 = new OutputBufferInfo();
             openExternalStorageFile(this.filename + format + "_estim.txt", 2, this.outFileMatlab2);
+            this.outFileMatlab3 = new OutputBufferInfo();
+            openExternalStorageFile(this.filename + format + "_mine.txt", 3, this.outFileMatlab3);
         }
         this.recording = true;
     }
@@ -286,17 +301,24 @@ public final class DataRecorder {
                 cVector = new CVector(3);
                 positionFilter.getAttitude().getMeasuredOrientation(cVector);
                 CVector measureLatLonAlt = positionFilter.getMeasureLatLonAlt();
-                OutputBufferInfo outputBufferInfo = this.outFileMatlab1;
                 CVector[] cVectorArr = new CVector[5];
                 cVectorArr[0] = cVector.times(Constants.RAD2DEG);
                 cVectorArr[1] = positionFilter.getMeasureTotalAcc();
                 cVectorArr[2] = positionFilter.getAttitude().getMeasureGyro().times(Constants.RAD2DEG);
                 cVectorArr[3] = positionFilter.getAttitude().getMeasureMag();
                 cVectorArr[4] = new CVector(new float[]{(float) (measureLatLonAlt.getElement(1) * Constants.RAD2DEG), (float) (measureLatLonAlt.getElement(2) * Constants.RAD2DEG), (float) measureLatLonAlt.getElement(3), positionFilter.getGPSAccuracy()});
-                writeDataToExternalStorageFile(outputBufferInfo, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f", "%18.13g"});
+                writeDataToExternalStorageFile(this.outFileMatlab1, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f", "%18.13g"});
             }
             if (this.outFileMatlab2 != null) {
                 writeDataToExternalStorageFile(this.outFileMatlab2, timeStamp, new CVector[]{positionFilter.getEstimatedAngles().times(Constants.RAD2DEG), positionFilter.getEstimatedAcceleration(), positionFilter.getEstimatedAngularVelocity().times(Constants.RAD2DEG)}, new String[]{"%12.6f", "%12.6f", "%12.6f"});
+            }
+            if (this.outFileMatlab3 != null) {
+                CVector[] cVectorArr = new CVector[4];
+                cVectorArr[0] = positionFilter.getEstimatedAngles().times(Constants.RAD2DEG);
+                cVectorArr[1] = positionFilter.getMeasureLinearAcc();
+                cVectorArr[2] = positionFilter.getMeasureTotalAcc();
+                cVectorArr[3] = positionFilter.getAttitude().getMeasureGyro().times(Constants.RAD2DEG);
+                writeDataToExternalStorageFile(this.outFileMatlab3, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f"});
             }
             if (this.outFileGPX != null) {
                 cVector = positionFilter.getEstimatedLatLonAlt();
