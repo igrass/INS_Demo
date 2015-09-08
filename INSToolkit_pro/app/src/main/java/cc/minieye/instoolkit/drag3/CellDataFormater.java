@@ -85,6 +85,9 @@ public class CellDataFormater {
                 new Format("Acceleration X", "Measured acceleration in the X-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_X_MES, R.drawable.ic_launcher),
                 new Format("Acceleration Y", "Measured acceleration in the Y-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Y_MES, R.drawable.ic_launcher),
                 new Format("Acceleration Z", "Measured acceleration in the Z-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Z_MES, R.drawable.ic_launcher),
+                new Format("Lin. acceleration X", "Lin. acceleration in the X-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_X_LIN, R.drawable.ic_launcher),
+                new Format("Lin. acceleration Y", "Lin. acceleration in the Y-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Y_LIN, R.drawable.ic_launcher),
+                new Format("Lin. acceleration Z", "Lin. acceleration in the Z-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Z_LIN, R.drawable.ic_launcher),
                 new Format("Lin. acceleration X (estimate)", "Estimated acceleration in the X-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_X_EST, R.drawable.ic_launcher),
                 new Format("Lin. acceleration Y (estimate)", "Estimated acceleration in the Y-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Y_EST, R.drawable.ic_launcher),
                 new Format("Lin. acceleration Z (estimate)", "Estimated acceleration in the Z-body direction", "m/s2", "%2.2f", Constants.DATA_ACC_Z_EST, R.drawable.ic_launcher),
@@ -154,7 +157,6 @@ public class CellDataFormater {
             }
             i2++;
         }
-        i2 = 0;
         Rect rect = new Rect();
         canvas.drawText(dCellTextInfo[i2].title, (float) 5, (float) (this.height - 3), this.mPaintDescription);
         RectF rectF = new RectF();

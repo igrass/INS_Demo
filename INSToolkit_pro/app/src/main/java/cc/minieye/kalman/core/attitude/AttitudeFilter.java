@@ -84,19 +84,51 @@ public abstract class AttitudeFilter {
     }
 
     public double getData(int i) {
-        if (i >= Constants.DATA_ANGLE_PITCH_RAW && i <= Constants.DATA_ANGLE_YAW_EST) {
-            return i == Constants.DATA_ANGLE_PITCH_RAW ? this.mesAngles.getElement(2) * Constants.RAD2DEG : i == Constants.DATA_ANGLE_ROLL_RAW ? this.mesAngles.getElement(1) * Constants.RAD2DEG : i == Constants.DATA_ANGLE_YAW_RAW ? this.mesAngles.getElement(3) * Constants.RAD2DEG : i != Constants.DATA_ANGLE_HEAD_RAW ? i == Constants.DATA_ANGLE_PITCH_EST ? getEstimatedPitchAngle() * Constants.RAD2DEG : i == Constants.DATA_ANGLE_ROLL_EST ? getEstimatedRollAngle() * Constants.RAD2DEG : i == Constants.DATA_ANGLE_YAW_EST ? getEstimatedYawAngle() * Constants.RAD2DEG : i == Constants.DATA_ANGLE_HEAD_EST ? getEstimatedHeadingAngle() * Constants.RAD2DEG : 0.0d : 0.0d;
-        } else {
-            if (i >= Constants.DATA_ANGLER_PITCH_RAW && i <= Constants.DATA_ANGLER_YAW_EST) {
-                return i == Constants.DATA_ANGLER_PITCH_RAW ? getMeasureGyro().getElement(2) * Constants.RAD2DEG : i == Constants.DATA_ANGLER_ROLL_RAW ? getMeasureGyro().getElement(1) * Constants.RAD2DEG : i == Constants.DATA_ANGLER_YAW_RAW ? getMeasureGyro().getElement(3) * Constants.RAD2DEG : i == Constants.DATA_ANGLER_PITCH_EST ? getEstimatedAngularVelocity().getElement(1) * Constants.RAD2DEG : i == Constants.DATA_ANGLER_ROLL_EST ? getEstimatedAngularVelocity().getElement(2) * Constants.RAD2DEG : i == Constants.DATA_ANGLER_YAW_EST ? getEstimatedAngularVelocity().getElement(3) * Constants.RAD2DEG : 0.0d;
-            } else {
-                if (i < Constants.DATA_MAG_X_MES || i > Constants.DATA_MAG_Z_MES) {
-                    return i == Constants.DATA_TIME ? (double) this.last_time : 0.0d;
-                } else {
-                    CVector magneticFieldVector = this.measuresManager.getMagneticFieldVector();
-                    return i == Constants.DATA_MAG_X_MES ? magneticFieldVector.getElement(1) : i == Constants.DATA_MAG_Y_MES ? magneticFieldVector.getElement(2) : i == Constants.DATA_MAG_Z_MES ? magneticFieldVector.getElement(3) : 0.0d;
-                }
-            }
+        switch (i) {
+            case Constants.DATA_ANGLE_ROLL_RAW:
+                return this.mesAngles.getElement(1) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_PITCH_RAW:
+                return this.mesAngles.getElement(2) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_YAW_RAW:
+                return this.mesAngles.getElement(3) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_HEAD_RAW:
+                return 0.0d;
+
+            case Constants.DATA_ANGLE_ROLL_EST:
+                return getEstimatedRollAngle() * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_PITCH_EST:
+                return getEstimatedPitchAngle() * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_YAW_EST:
+                return getEstimatedYawAngle() * Constants.RAD2DEG;
+            case Constants.DATA_ANGLE_HEAD_EST:
+                return getEstimatedHeadingAngle() * Constants.RAD2DEG;
+
+            case Constants.DATA_ANGLER_ROLL_RAW:
+                return getMeasureGyro().getElement(1) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLER_PITCH_RAW:
+                return getMeasureGyro().getElement(2) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLER_YAW_RAW:
+                return getMeasureGyro().getElement(3) * Constants.RAD2DEG;
+
+            case Constants.DATA_ANGLER_ROLL_EST:
+                return getEstimatedAngularVelocity().getElement(1) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLER_PITCH_EST:
+                return getEstimatedAngularVelocity().getElement(2) * Constants.RAD2DEG;
+            case Constants.DATA_ANGLER_YAW_EST:
+                return getEstimatedAngularVelocity().getElement(3) * Constants.RAD2DEG;
+
+            case Constants.DATA_MAG_X_MES:
+                return this.measuresManager.getMagneticFieldVector().getElement(1);
+            case Constants.DATA_MAG_Y_MES:
+                return this.measuresManager.getMagneticFieldVector().getElement(2);
+            case Constants.DATA_MAG_Z_MES:
+                return this.measuresManager.getMagneticFieldVector().getElement(3);
+
+            case Constants.DATA_TIME:
+                return (double) this.last_time;
+
+            default:
+                return 0.0d;
         }
     }
 

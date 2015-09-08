@@ -40,6 +40,9 @@ public class Constants {
     public static final int DATA_ACC_X_EST = 33;
     public static final int DATA_ACC_Y_EST = 34;
     public static final int DATA_ACC_Z_EST = 35;
+    public static final int DATA_ACC_X_LIN = 36;
+    public static final int DATA_ACC_Y_LIN = 37;
+    public static final int DATA_ACC_Z_LIN = 38;
     public static final int DATA_VEL_X_MES = 40;
     public static final int DATA_VEL_Y_MES = 41;
     public static final int DATA_VEL_Z_MES = 42;
@@ -64,7 +67,7 @@ public class Constants {
     public static final int DATA_TEMPERATURE = 92;
     public static final int DATA_LUMINOSITY = 93;
     public static final int DATA_PRESSURE = 94;
-    public static final int DATA_MOVE = 95;
     public static final int DATA_TIME = 100;
+    public static final int DATA_MOVE = 110;
 
 }

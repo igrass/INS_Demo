@@ -250,79 +250,71 @@ public final class UKFPosition extends PositionFilter {
     }
 
     public double getData(int i) {
-        if (i < Constants.DATA_ACC_X_MES || i > Constants.DATA_ACC_Z_EST) {
-            if (i < Constants.DATA_VEL_X_MES || i > Constants.DATA_VEL_Z_EST) {
-                if (i < Constants.DATA_POS_X_MES || i > Constants.DATA_POS_Z_EST) {
-                    if (i == Constants.DATA_ALT_MES) {
-                        return getMeasureAltitude();
-                    }
-                    if (i == Constants.DATA_ALT_EST) {
-                        return getEstimatedAltitude();
-                    }
-                    if (i == Constants.DATA_G_EST) {
-                        return getEstimatedAcceleration().norm();
-                    }
-                    if (i == Constants.DATA_TIME) {
-                        return (double) this.last_time;
-                    }
-                } else if (i == Constants.DATA_POS_X_MES) {
-                    return this.measuresManager.getPosition().getElement(1);
-                } else {
-                    if (i == Constants.DATA_POS_Y_MES) {
-                        return this.measuresManager.getPosition().getElement(2);
-                    }
-                    if (i == Constants.DATA_POS_Z_MES) {
-                        return this.measuresManager.getPosition().getElement(3);
-                    }
-                    if (i == Constants.DATA_POS_X_EST) {
-                        return getEstimatedECEFPosition().getElement(1);
-                    }
-                    if (i == Constants.DATA_POS_Y_EST) {
-                        return getEstimatedECEFPosition().getElement(2);
-                    }
-                    if (i == Constants.DATA_POS_Z_EST) {
-                        return getEstimatedECEFPosition().getElement(3);
-                    }
-                }
-            } else if (i == Constants.DATA_VEL_X_MES) {
+        switch (i) {
+            case Constants.DATA_ALT_MES:
+                return getMeasureAltitude();
+            case Constants.DATA_ALT_EST:
+                return getEstimatedAltitude();
+            case Constants.DATA_G_EST:
+                return getEstimatedAcceleration().norm();
+            case Constants.DATA_GPS_ACCURACY:
+                return (double) getGPSAccuracy();
+
+            case Constants.DATA_POS_X_MES:
+                return this.measuresManager.getPosition().getElement(1);
+            case Constants.DATA_POS_Y_MES:
+                return this.measuresManager.getPosition().getElement(2);
+            case Constants.DATA_POS_Z_MES:
+                return this.measuresManager.getPosition().getElement(3);
+
+            case Constants.DATA_POS_X_EST:
+                return getEstimatedECEFPosition().getElement(1);
+            case Constants.DATA_POS_Y_EST:
+                return getEstimatedECEFPosition().getElement(2);
+            case Constants.DATA_POS_Z_EST:
+                return getEstimatedECEFPosition().getElement(3);
+
+            case Constants.DATA_VEL_X_MES:
                 return this.measuresManager.getVelocity().getElement(1);
-            } else {
-                if (i == Constants.DATA_VEL_Y_MES) {
-                    return this.measuresManager.getVelocity().getElement(2);
-                }
-                if (i == Constants.DATA_VEL_Z_MES) {
-                    return this.measuresManager.getVelocity().getElement(3);
-                }
-                if (i == Constants.DATA_VEL_X_EST) {
-                    return getEstimatedSpeed().getElement(1);
-                }
-                if (i == Constants.DATA_VEL_Y_EST) {
-                    return getEstimatedSpeed().getElement(2);
-                }
-                if (i == Constants.DATA_VEL_Z_EST) {
-                    return getEstimatedSpeed().getElement(3);
-                }
-            }
-        } else if (i == Constants.DATA_ACC_X_MES) {
-            return this.measuresManager.getAcceleration().getElement(1);
-        } else {
-            if (i == Constants.DATA_ACC_Y_MES) {
+            case Constants.DATA_VEL_Y_MES:
+                return this.measuresManager.getVelocity().getElement(2);
+            case Constants.DATA_VEL_Z_MES:
+                return this.measuresManager.getVelocity().getElement(3);
+
+            case Constants.DATA_VEL_X_EST:
+                return getEstimatedSpeed().getElement(1);
+            case Constants.DATA_VEL_Y_EST:
+                return getEstimatedSpeed().getElement(2);
+            case Constants.DATA_VEL_Z_EST:
+                return getEstimatedSpeed().getElement(3);
+
+            case Constants.DATA_ACC_X_MES:
+                return this.measuresManager.getAcceleration().getElement(1);
+            case Constants.DATA_ACC_Y_MES:
                 return this.measuresManager.getAcceleration().getElement(2);
-            }
-            if (i == Constants.DATA_ACC_Z_MES) {
+            case Constants.DATA_ACC_Z_MES:
                 return this.measuresManager.getAcceleration().getElement(3);
-            }
-            if (i == Constants.DATA_ACC_X_EST) {
+
+            case Constants.DATA_ACC_X_EST:
                 return getEstimatedAcceleration().getElement(1);
-            }
-            if (i == Constants.DATA_ACC_Y_EST) {
+            case Constants.DATA_ACC_Y_EST:
                 return getEstimatedAcceleration().getElement(2);
-            }
-            if (i == Constants.DATA_ACC_Z_EST) {
+            case Constants.DATA_ACC_Z_EST:
                 return getEstimatedAcceleration().getElement(3);
-            }
+
+            case Constants.DATA_ACC_X_LIN:
+                return this.measuresManager.getLinearAcceleration().getElement(1);
+            case Constants.DATA_ACC_Y_LIN:
+                return this.measuresManager.getLinearAcceleration().getElement(2);
+            case Constants.DATA_ACC_Z_LIN:
+                return this.measuresManager.getLinearAcceleration().getElement(3);
+
+            case Constants.DATA_TIME:
+                return (double) this.last_time;
+
+            default:
+                return this.kattitude.getData(i);
         }
-        return this.kattitude.getData(i);
     }
 
     public CVector getEstimateState(int i) {
