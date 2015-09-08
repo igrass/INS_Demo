@@ -75,7 +75,7 @@ public class FragmentFigure extends Fragment implements OnTouchListener {
         }
 
         public boolean onLongClick(View view) {
-            Toast.makeText(this.val$activity, "Start Recording...", Toast.LENGTH_LONG).show();
+            Toast.makeText(this.val$activity, "Start Recording...", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

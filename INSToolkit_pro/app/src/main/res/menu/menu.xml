@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-  xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:resauto="http://schemas.android.com/apk/res-auto" >
     <item android:icon="@android:drawable/ic_menu_view" android:id="@id/lookup_background" android:title="@string/lookup_horizon" />
     <item android:icon="@android:drawable/ic_menu_mapmode" android:id="@id/lookup_groundtrack" android:title="@string/lookup_groundtrack" />
     <item android:icon="@android:drawable/ic_menu_compass" android:id="@id/lookup_compass" android:title="@string/lookup_compass" />
@@ -8,8 +9,8 @@
     <item android:icon="@android:drawable/ic_menu_gallery" android:id="@id/lookup_infoboard" android:title="@string/lookup_infoboard" />
     <item android:icon="@android:drawable/ic_menu_manage" android:id="@id/lookup_restposition" android:title="@string/lookup_pitchset" />
     <item android:icon="@android:drawable/ic_menu_manage" android:id="@id/lookup_calibrate" android:title="@string/lookup_calibrate" />
-    <item android:icon="@android:drawable/ic_menu_save" android:id="@id/lookup_logging" android:title="@string/lookup_logging" android:showAsAction="ifRoom|withText" />
-    <item android:icon="@android:drawable/ic_menu_preferences" android:id="@id/lookup_settings" android:title="@string/lookup_settings" android:showAsAction="ifRoom|withText" />
+    <item android:icon="@android:drawable/ic_menu_save" android:id="@id/lookup_logging" android:title="@string/lookup_logging" resauto:showAsAction="ifRoom|withText" />
+    <item android:icon="@android:drawable/ic_menu_preferences" android:id="@id/lookup_settings" android:title="@string/lookup_settings" resauto:showAsAction="ifRoom|withText" />
     <item android:icon="@android:drawable/ic_menu_info_details" android:id="@id/lookup_help" android:title="@string/lookup_help" />
     <item android:icon="@android:drawable/ic_menu_info_details" android:id="@id/lookup_about" android:title="@string/lookup_about" />
 </menu>

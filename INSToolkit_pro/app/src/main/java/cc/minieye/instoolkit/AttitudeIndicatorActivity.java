@@ -673,11 +673,11 @@ public final class AttitudeIndicatorActivity extends Activity {
     }
 
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (this.mLocManager.isProviderEnabled("gps")) {
-            menu.findItem(R.id.lookup_groundtrack).setEnabled(TOGGLE_ON_CLICK);
-        } else {
-            menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
-        }
+//        if (this.mLocManager.isProviderEnabled("gps")) {
+//            menu.findItem(R.id.lookup_groundtrack).setEnabled(TOGGLE_ON_CLICK);
+//        } else {
+//            menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
+//        }
         menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
         if (this.useTabletLayout) {
             menu.findItem(R.id.lookup_groundtrack).setVisible(false);
@@ -793,7 +793,7 @@ public final class AttitudeIndicatorActivity extends Activity {
                 beginTransaction.commit();
                 return;
             }
-            Toast.makeText(this, "This view is already displayed!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "This view is already displayed!", Toast.LENGTH_SHORT).show();
         }
     }
 

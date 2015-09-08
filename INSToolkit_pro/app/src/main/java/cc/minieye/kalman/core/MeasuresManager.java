@@ -162,9 +162,9 @@ public final class MeasuresManager {
         } else if (i == IGYROSCOPE) {
             this.mesGyros.copy(this.matSensor2Device.times(cVector));
             this.newGyroMeasure = true;
-        } else if (i == IMAGNETOMETER) {
-            this.mesMag.copy(this.matSensor2Device.times(cVector));
-            this.newMagMeasure = true;
+//        } else if (i == IMAGNETOMETER) {
+//            this.mesMag.copy(this.matSensor2Device.times(cVector));
+//            this.newMagMeasure = true;
         } else if (i == IGPS_POSITION) {
             this.mesGpsPos.copy(cVector.minus(this.OriginPosition));
         } else if (i == IGPS_VELOCITY) {

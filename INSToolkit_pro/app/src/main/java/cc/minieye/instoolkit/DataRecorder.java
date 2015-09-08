@@ -218,7 +218,7 @@ public final class DataRecorder {
         }
         Date time = Calendar.getInstance().getTime();
         String format = String.format("_%02d%02d%02dT%02d%02d%02d", new Object[]{Integer.valueOf(time.getYear() - 100), Integer.valueOf(time.getMonth()), Integer.valueOf(time.getDate()), Integer.valueOf(time.getHours()), Integer.valueOf(time.getMinutes()), Integer.valueOf(time.getSeconds())});
-        Toast.makeText(this.mContext, "Start recording...", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.mContext, "Start recording...", Toast.LENGTH_SHORT).show();
         if (this.format == 0) {
             this.outFileGPX = new OutputBufferInfo();
             openGPXFile(this.filename + format + ".gpx", 0, this.outFileGPX);
