@@ -64,7 +64,6 @@ import cc.minieye.kalman.maths.CVector;
 import cc.minieye.kalman.util.Constants;
 
 public final class AttitudeIndicatorActivity extends Activity {
-    private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 5000;
     static int CONTENT_COMPAS = 0;
     static int CONTENT_DATA = 0;
@@ -107,6 +106,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     public boolean useTabletLayout;
     public int vBatteryLevel;
     private int[] viewIds;
+    private Menu menu;
 
     /* renamed from: cc.minieye.instoolkit.AttitudeIndicatorActivity.13 */
     class AnonymousClass13 implements OnMenuItemClickListener {
@@ -649,6 +649,7 @@ public final class AttitudeIndicatorActivity extends Activity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
+        this.menu = menu;
         return TOGGLE_ON_CLICK;
     }
 
@@ -677,6 +678,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         } else {
             menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
         }
+        menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
         if (this.useTabletLayout) {
             menu.findItem(R.id.lookup_groundtrack).setVisible(false);
             menu.findItem(R.id.lookup_infoboard).setVisible(false);
@@ -839,5 +841,11 @@ public final class AttitudeIndicatorActivity extends Activity {
 
     public void startRecording() {
         this.logging.enableRecording(this.logging.isRecording() ? false : TOGGLE_ON_CLICK);
+
+        if (this.logging.isRecording()) {
+            menu.findItem(R.id.lookup_logging).setTitle(R.string.lookup_notlogging);
+        } else {
+            menu.findItem(R.id.lookup_logging).setTitle(R.string.lookup_logging);
+        }
     }
 }
