@@ -196,7 +196,7 @@ FakesAssemblies/
 *.opt
 
 # ignore IDEA
-.idea
+# .idea
 
 # cmake msvc project files
 msvc
