@@ -84,6 +84,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     private FragmentHorizon fragmentHorizon;
     private FragmentFigure fragmentPlots;
     private DataRecorder logging;
+    public MoveManager moveManager;
     private BroadcastReceiver mBatInfoReceiver;
     private Camera mCamera;
     OnTouchListener mDelayHideTouchListener;
@@ -611,6 +612,7 @@ public final class AttitudeIndicatorActivity extends Activity {
                     AttitudeIndicatorActivity.this.fragmentPlots.pushData(positionFilter);
                 }
                 AttitudeIndicatorActivity.this.logging.pushData(positionFilter);
+                AttitudeIndicatorActivity.this.moveManager.pushData(positionFilter);
             }
         });
         FragmentTransaction beginTransaction = getFragmentManager().beginTransaction();
@@ -645,6 +647,7 @@ public final class AttitudeIndicatorActivity extends Activity {
             }
         }
         this.logging = new DataRecorder(this, this.opts.fileformat);
+        this.moveManager = new MoveManager(this);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

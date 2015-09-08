@@ -132,6 +132,9 @@ public class FragmentDataGrid extends Fragment implements OnLongClickListener, O
         } else if (i == Constants.DATA_PRESSURE) {
             fArr[0] = (float) attitudeIndicatorActivity.mSimulation.mPressureValue;
             return true;
+        } else if (i == Constants.DATA_MOVE) {
+            fArr[0] = (float) attitudeIndicatorActivity.moveManager.currMove.norm();
+            return true;
         } else {
             return false;
         }

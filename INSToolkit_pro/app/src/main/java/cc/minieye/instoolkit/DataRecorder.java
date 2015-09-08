@@ -151,7 +151,7 @@ public final class DataRecorder {
                             outputBufferInfo.outputFile.write("# Units: deg, m/s2, rad/s, uT\n");
                             outputBufferInfo.outputFile.write("# Values\n");
                             outputBufferInfo.outputFile.write("#        T   Time with respect to start of the app\n");
-                            outputBufferInfo.outputFile.write("#        LIN_ACC Liner Accelerations, m/s2\n");
+                            outputBufferInfo.outputFile.write("#        LIN_ACC Linear Accelerations, m/s2\n");
                             outputBufferInfo.outputFile.write("#        ACC Accelerations, m/s2\n");
                             outputBufferInfo.outputFile.write("#        GYR Angular velocities, rad/s\n");
                         }
@@ -295,8 +295,7 @@ public final class DataRecorder {
     public void pushData(PositionFilter positionFilter) {
         if (this.recording) {
             CVector cVector;
-            float timeStamp;
-            timeStamp = (float) positionFilter.getTimeStamp();
+            float timeStamp = (float) positionFilter.getTimeStamp();
             if (this.outFileMatlab1 != null) {
                 cVector = new CVector(3);
                 positionFilter.getAttitude().getMeasuredOrientation(cVector);

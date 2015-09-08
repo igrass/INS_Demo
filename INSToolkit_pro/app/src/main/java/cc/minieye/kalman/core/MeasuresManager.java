@@ -16,6 +16,7 @@ public final class MeasuresManager {
     public static int IPRESSURE;
     public CVector OriginPosition;
     private LowPassFilter filterAcc;
+    private LowPassFilter filterLinearAcc;
     private CMatrix matSensor2Device;
     private CVector mesAcc;
     private double mesBearing;
@@ -46,6 +47,7 @@ public final class MeasuresManager {
     public MeasuresManager(int i) {
         this.mesAcc = new CVector(3);
         this.filterAcc = new LowPassFilter(0.8d, 3);
+        this.filterLinearAcc = new LowPassFilter(0.8d, 3);
         this.newAccMeasure = false;
         this.mesLinAcc = new CVector(3);
         this.mesGyros = new CVector(3);
@@ -154,10 +156,10 @@ public final class MeasuresManager {
 
     public void setMeasures(float f, CVector cVector, int i) {
         if (i == IACCELEROMETER) {
-            this.mesAcc.copy(this.filterAcc.getValue(this.matSensor2Device.times(cVector)));
+            this.mesAcc.copy(this.matSensor2Device.times(this.filterAcc.getValue(cVector)));
             this.newAccMeasure = true;
         } else if (i == ILINACCELEROMETER) {
-            this.mesLinAcc.copy(this.matSensor2Device.times(cVector));
+            this.mesLinAcc.copy(this.matSensor2Device.times(this.filterLinearAcc.getValue(cVector)));
             this.newAccMeasure = true;
         } else if (i == IGYROSCOPE) {
             this.mesGyros.copy(this.matSensor2Device.times(cVector));

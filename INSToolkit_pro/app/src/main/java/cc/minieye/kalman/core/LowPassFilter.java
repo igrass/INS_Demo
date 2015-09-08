@@ -8,7 +8,6 @@ public final class LowPassFilter {
     private double oldvalue;
 
     public LowPassFilter(double d, int i) {
-        this.oldValueVec = null;
         this.alpha = d;
         this.oldValueVec = new CVector(i);
     }
