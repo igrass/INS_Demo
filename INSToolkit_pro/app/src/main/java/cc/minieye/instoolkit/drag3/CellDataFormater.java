@@ -116,6 +116,7 @@ public class CellDataFormater {
                 new Format("Device Temperature", "The current temperature", "\u00b0C", "%.0f", Constants.DATA_TEMPERATURE, cc.minieye.instoolkit.R.drawable.icon_temperature),
                 new Format("Luminosity", "The current luminosity", "Lux", "%.0f", Constants.DATA_LUMINOSITY, R.drawable.ic_launcher),
                 new Format("Move", "The current move", "m/s2", "%.0f", Constants.DATA_MOVE, R.drawable.ic_launcher),
+                new Format("Move pitch", "The current move pitch", "deg", "%3.1f", Constants.DATA_MOVE_PITCH, R.drawable.ic_launcher),
         };
     }
 

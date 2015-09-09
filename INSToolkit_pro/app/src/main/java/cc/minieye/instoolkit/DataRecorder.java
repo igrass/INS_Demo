@@ -147,7 +147,7 @@ public final class DataRecorder {
                             outputBufferInfo.outputFile.write("#        MAG Magnetic field measurements, uT\n#\n");
                         } else if (i == 3) {
                             outputBufferInfo.outputFile.write("# MINE DATA: outputs from sensors.\n");
-                            outputBufferInfo.outputFile.write("# T     PSI    THETA      PHI      LIN_ACC_X    LIN_ACC_Y    LIN_ACC_Z    ACC_X    ACC_Y    ACC_Z    GYR_X     GYR_Y    GYR_Z    \n");
+                            outputBufferInfo.outputFile.write("# T     PSI    THETA      PHI      LIN_ACC_X    LIN_ACC_Y    LIN_ACC_Z    ACC_X    ACC_Y    ACC_Z    GYR_X     GYR_Y    GYR_Z    MOVE    MOVE_PITCH\n");
                             outputBufferInfo.outputFile.write("# Units: deg, m/s2, rad/s, uT\n");
                             outputBufferInfo.outputFile.write("# Values\n");
                             outputBufferInfo.outputFile.write("#        T   Time with respect to start of the app\n");
@@ -312,12 +312,13 @@ public final class DataRecorder {
                 writeDataToExternalStorageFile(this.outFileMatlab2, timeStamp, new CVector[]{positionFilter.getEstimatedAngles().times(Constants.RAD2DEG), positionFilter.getEstimatedAcceleration(), positionFilter.getEstimatedAngularVelocity().times(Constants.RAD2DEG)}, new String[]{"%12.6f", "%12.6f", "%12.6f"});
             }
             if (this.outFileMatlab3 != null) {
-                CVector[] cVectorArr = new CVector[4];
+                CVector[] cVectorArr = new CVector[5];
                 cVectorArr[0] = positionFilter.getEstimatedAngles().times(Constants.RAD2DEG);
                 cVectorArr[1] = positionFilter.getMeasureLinearAcc();
                 cVectorArr[2] = positionFilter.getMeasureTotalAcc();
                 cVectorArr[3] = positionFilter.getAttitude().getMeasureGyro().times(Constants.RAD2DEG);
-                writeDataToExternalStorageFile(this.outFileMatlab3, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f"});
+                cVectorArr[4] = new CVector(new float[]{(float) (MoveManager.getInstance().getMove().norm()), (float) (MoveManager.getInstance().getMovePitch() * Constants.RAD2DEG)});
+                writeDataToExternalStorageFile(this.outFileMatlab3, timeStamp, cVectorArr, new String[]{"%12.6f", "%12.6f", "%12.6f", "%12.6f", "%12.6f"});
             }
             if (this.outFileGPX != null) {
                 cVector = positionFilter.getEstimatedLatLonAlt();

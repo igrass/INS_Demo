@@ -69,5 +69,6 @@ public class Constants {
     public static final int DATA_PRESSURE = 94;
     public static final int DATA_TIME = 100;
     public static final int DATA_MOVE = 110;
+    public static final int DATA_MOVE_PITCH = 111;
 
 }

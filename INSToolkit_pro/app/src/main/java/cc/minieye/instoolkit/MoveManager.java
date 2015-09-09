@@ -1,19 +1,17 @@
 package cc.minieye.instoolkit;
 
-import android.content.Context;
-
 import java.util.LinkedList;
 
 import cc.minieye.kalman.core.position.PositionFilter;
 import cc.minieye.kalman.maths.CVector;
 
 public final class MoveManager {
-    private static final int TIME_INTERVAL = 10;
-    private static final double MIN_SIZE = 1.0d;
+    public static final int TIME_INTERVAL = 10;
+    public static final double MIN_SIZE = 1.0d;
 
-    private Context mContext;
+    private CVector currMove;
 
-    public CVector currMove;
+    private static MoveManager mInstance;
 
     class AccInfo {
         float time;
@@ -26,12 +24,16 @@ public final class MoveManager {
 
     private LinkedList<AccInfo> accList;
 
-    public MoveManager(Context context) {
-        this.mContext = context;
-
+    private MoveManager() {
         accList = new LinkedList();
 
         currMove = new CVector(3);
+    }
+
+    public static synchronized MoveManager getInstance() {
+        if (mInstance == null)
+            mInstance = new MoveManager();
+        return mInstance;
     }
 
     public void pushData(PositionFilter positionFilter) {
@@ -80,5 +82,18 @@ public final class MoveManager {
         }
 
         currMove.copy(move);
+    }
+
+    public CVector getMove() {
+        return currMove;
+    }
+
+    public double getMovePitch() {
+        double pitch = 0.0d;
+        if (currMove.norm() < MIN_SIZE)
+            return pitch;
+        pitch = Math.atan2(currMove.getElement(3), currMove.getElement(1));
+
+        return pitch;
     }
 }
