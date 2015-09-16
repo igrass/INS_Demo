@@ -134,7 +134,7 @@ public final class AttitudeIndicatorActivity extends Activity {
             } else if (itemId == R.id.menu_close_view) {
                 AttitudeIndicatorActivity.this.hideLayout(this.val$idContainer);
             }
-            return AttitudeIndicatorActivity.TOGGLE_ON_CLICK;
+            return true;
         }
     }
 
@@ -210,7 +210,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         this.mWifiManager = null;
         this.nextfragment = 1;
         this.viewIds = new int[]{R.id.fragment_container1, R.id.fragment_container2, R.id.fragment_container3};
-        this.useTabletLayout = TOGGLE_ON_CLICK;
+        this.useTabletLayout = true;
         this.menuShown = false;
         this.opts = new OptionsInav();
         this.alertGPSdialog = null;
@@ -227,9 +227,9 @@ public final class AttitudeIndicatorActivity extends Activity {
                     return;
                 }
                 if (intent.getBooleanExtra("connected", false)) {
-                    AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = AttitudeIndicatorActivity.TOGGLE_ON_CLICK;
+                    AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = true;
                 } else {
-                    AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = AttitudeIndicatorActivity.TOGGLE_ON_CLICK;
+                    AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = true;
                 }
             }
         };
@@ -261,7 +261,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         builder.setMessage(R.string.msg_wifi).setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i) {
                 AttitudeIndicatorActivity.this.startActivity(new Intent("android.settings.WIFI_SETTINGS"));
-                AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = AttitudeIndicatorActivity.TOGGLE_ON_CLICK;
+                AttitudeIndicatorActivity.this.mSimulation.canSendDataOverWifi = true;
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -284,7 +284,7 @@ public final class AttitudeIndicatorActivity extends Activity {
             ViewConfiguration viewConfiguration = ViewConfiguration.get(this);
             Field declaredField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
             if (declaredField != null) {
-                declaredField.setAccessible(TOGGLE_ON_CLICK);
+                declaredField.setAccessible(true);
                 declaredField.setBoolean(viewConfiguration, false);
             }
         } catch (Exception e) {
@@ -364,7 +364,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((WindowManager) activity.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getMetrics(displayMetrics);
         boolean z2 = displayMetrics.densityDpi == 213 || displayMetrics.densityDpi == 320;
-        return (z || z2) ? TOGGLE_ON_CLICK : false;
+        return (z || z2) ? true : false;
     }
 
     private boolean onMenuSelected(int i) {
@@ -373,30 +373,30 @@ public final class AttitudeIndicatorActivity extends Activity {
                 case R.id.lookup_background /*2131034159*/:
                     if (this.selectedFragment == CONTENT_HUD) {
                         this.fragmentHorizon.changeBackgroundMode();
-                        return TOGGLE_ON_CLICK;
+                        return true;
                     }
                     this.fragmentHorizon.setCameraMode(false);
                     showFragmentContent(0, CONTENT_HUD);
-                    return TOGGLE_ON_CLICK;
+                    return true;
                 case R.id.lookup_groundtrack /*2131034160*/:
                     showFragmentContent(0, CONTENT_GROUND);
-                    return TOGGLE_ON_CLICK;
+                    return true;
             }
         }
         switch (i) {
             case R.id.lookup_compass /*2131034161*/:
                 showFragmentContent(0, CONTENT_COMPAS);
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_plot /*2131034162*/:
                 showFragmentContent(0, CONTENT_PLOTS);
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_infoboard /*2131034163*/:
                 if (this.useTabletLayout) {
                     showFragmentContent(2, CONTENT_DATA);
-                    return TOGGLE_ON_CLICK;
+                    return true;
                 }
                 showFragmentContent(0, CONTENT_DATA);
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_restposition /*2131034164*/:
                 CVector estimatedAngles = this.mSimulation.getKalman().getEstimatedAngles();
                 this.opts.fZeroPitchValue = Constants.RAD2DEG * estimatedAngles.getElement(2);
@@ -404,19 +404,19 @@ public final class AttitudeIndicatorActivity extends Activity {
                 Editor edit = PreferenceManager.getDefaultSharedPreferences(this).edit();
                 edit.putFloat("rest_pitch_value", (float) this.opts.fZeroPitchValue);
                 edit.apply();
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_calibrate /*2131034165*/:
                 showCalibration();
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_logging /*2131034166*/:
                 startRecording();
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_settings /*2131034167*/:
                 showOptionsForm();
-                return TOGGLE_ON_CLICK;
+                return true;
             case R.id.lookup_about /*2131034169*/:
                 showDisclaimer();
-                return TOGGLE_ON_CLICK;
+                return true;
             default:
                 return false;
         }
@@ -468,7 +468,7 @@ public final class AttitudeIndicatorActivity extends Activity {
             this.logging.setFileFormat(this.opts.fileformat);
         }
         if (this.opts.enUDPOutput) {
-            this.mSimulation.canSendDataOverWifi = TOGGLE_ON_CLICK;
+            this.mSimulation.canSendDataOverWifi = true;
             WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
             if (wifiManager == null) {
                 buildAlertMessageNoWifi();
@@ -617,7 +617,7 @@ public final class AttitudeIndicatorActivity extends Activity {
         FragmentTransaction beginTransaction = getFragmentManager().beginTransaction();
         if (findViewById(R.id.fragment_container2) != null) {
             this.selectedFragment = CONTENT_HUD;
-            this.useTabletLayout = TOGGLE_ON_CLICK;
+            this.useTabletLayout = true;
 //            beginTransaction.add(R.id.fragment_container1, this.fragmentGround, fragmentTags[CONTENT_GROUND]);
             beginTransaction.add(R.id.fragment_container1, this.fragmentHorizon, fragmentTags[CONTENT_GROUND]);
             if (this.opts.layoutStyle == 4 || this.opts.layoutStyle == 3) {
@@ -652,7 +652,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         this.menu = menu;
-        return TOGGLE_ON_CLICK;
+        return true;
     }
 
     public boolean onKeyDown(int i, KeyEvent keyEvent) {
@@ -660,7 +660,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     }
 
     public boolean onOptionsItemSelected(MenuItem menuItem) {
-        return onMenuSelected(menuItem.getItemId()) ? TOGGLE_ON_CLICK : super.onOptionsItemSelected(menuItem);
+        return onMenuSelected(menuItem.getItemId()) ? true : super.onOptionsItemSelected(menuItem);
     }
 
     protected void onPause() {
@@ -676,7 +676,7 @@ public final class AttitudeIndicatorActivity extends Activity {
 
     public boolean onPrepareOptionsMenu(Menu menu) {
 //        if (this.mLocManager.isProviderEnabled("gps")) {
-//            menu.findItem(R.id.lookup_groundtrack).setEnabled(TOGGLE_ON_CLICK);
+//            menu.findItem(R.id.lookup_groundtrack).setEnabled(true);
 //        } else {
 //            menu.findItem(R.id.lookup_groundtrack).setEnabled(false);
 //        }
@@ -736,10 +736,10 @@ public final class AttitudeIndicatorActivity extends Activity {
 
     public void showCalibration() {
         Builder builder = new Builder(this);
-        builder.setCancelable(TOGGLE_ON_CLICK);
+        builder.setCancelable(true);
         builder.setTitle("Title");
         builder.setMessage("Put the device on a horizontal surface and press START.");
-        builder.setInverseBackgroundForced(TOGGLE_ON_CLICK);
+        builder.setInverseBackgroundForced(true);
         builder.setPositiveButton("Start", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialogInterface, int i) {
                 AttitudeIndicatorActivity.this.calibrateProgressDialog = new ProgressDialog(AttitudeIndicatorActivity.this);
@@ -827,14 +827,14 @@ public final class AttitudeIndicatorActivity extends Activity {
         popupMenu.getMenu().findItem(R.id.menu_add_view_right).setVisible(false);
         if (this.useTabletLayout) {
             if (id == R.id.fragment_container1) {
-                popupMenu.getMenu().findItem(R.id.menu_add_view_right).setVisible(TOGGLE_ON_CLICK);
-                popupMenu.getMenu().findItem(R.id.menu_add_view_down).setVisible(TOGGLE_ON_CLICK);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_right).setVisible(true);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_down).setVisible(true);
             } else if (id == R.id.fragment_container2) {
-                popupMenu.getMenu().findItem(R.id.menu_add_view_left).setVisible(TOGGLE_ON_CLICK);
-                popupMenu.getMenu().findItem(R.id.menu_add_view_down).setVisible(TOGGLE_ON_CLICK);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_left).setVisible(true);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_down).setVisible(true);
             } else if (id == R.id.fragment_container3) {
-                popupMenu.getMenu().findItem(R.id.menu_add_view_left).setVisible(TOGGLE_ON_CLICK);
-                popupMenu.getMenu().findItem(R.id.menu_add_view_right).setVisible(TOGGLE_ON_CLICK);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_left).setVisible(true);
+                popupMenu.getMenu().findItem(R.id.menu_add_view_right).setVisible(true);
             }
         }
         popupMenu.setOnMenuItemClickListener(new AnonymousClass13(i2));
@@ -842,7 +842,7 @@ public final class AttitudeIndicatorActivity extends Activity {
     }
 
     public void startRecording() {
-        this.logging.enableRecording(this.logging.isRecording() ? false : TOGGLE_ON_CLICK);
+        this.logging.enableRecording(this.logging.isRecording() ? false : true);
 
         if (this.logging.isRecording()) {
             menu.findItem(R.id.lookup_logging).setTitle(R.string.lookup_notlogging);
